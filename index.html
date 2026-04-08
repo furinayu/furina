@@ -5,6 +5,31 @@
     <script>
       (function () {
         try {
+          if (location.protocol === "http:" || location.protocol === "https:") {
+            var origin = location.origin;
+            var p = location.pathname || "/";
+            if (p.endsWith("/index.html")) {
+              p = p.slice(0, p.length - "index.html".length);
+            }
+            if (!p.endsWith("/")) {
+              var last = p.slice(p.lastIndexOf("/") + 1);
+              if (!last || last.indexOf(".") === -1) {
+                p += "/";
+              }
+            }
+            if (p === "") {
+              p = "/";
+            }
+            var b = document.createElement("base");
+            b.href = origin + p;
+            document.head.insertBefore(b, document.head.querySelector("meta").nextSibling);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
           if (/[?&]furina_edit=1(?:&|$)/.test(location.search)) return;
           var h = location.hostname || "";
           var local = h === "localhost" || h === "127.0.0.1" || h.endsWith(".local");
@@ -43,7 +68,7 @@
           <div class="lock-screen__avatar" aria-hidden="true">
             <img
               class="lock-screen__avatar-img"
-              src="assets/app-icons/02-oc.png"
+              src="assets/02-oc.png"
               alt=""
               width="84"
               height="84"
