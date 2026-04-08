@@ -1,0 +1,6 @@
+GitHub Pages 专用静态包（Pet 固定回复「该功能调试中，等待上线」，不接后端）
+
+1. 将本文件夹内文件推送到仓库（可用 gh-pages 分支，或 main 根目录，取决于你在 GitHub 里选的发布来源）。
+2. 文案数据：默认已带 furina-site-content.json（与主站默认稿一致）。若你在本机改过介绍/文章/视频，请用 ?furina_edit=1 → Export JSON，把文件存到「项目根目录」命名为 furina-site-content.json，在仓库根执行：npm run sync:gh-json —— 会把该文件覆盖复制进本文件夹后再推送。
+3. 若仓库 Pages 地址是 https://用户.github.io/仓库名/ ，本包内 content.js 已使用相对路径拉取 furina-site-content.json。
+4. 主项目里的 server、宝塔部署与 API 与此包无关。

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          if (/[?&]furina_edit=1(?:&|$)/.test(location.search)) return;
+          var h = location.hostname || "";
+          var local = h === "localhost" || h === "127.0.0.1" || h.endsWith(".local");
+          if (!local) document.documentElement.classList.add("furina-no-editor");
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 静态网页与 API 不同域名时：填写 HTTPS 下的 API 根地址，勿带末尾斜杠，例如 https://api.example.com -->
+    <!-- <meta name="furina-pet-api" content="https://your-api-domain.com" /> -->
+    <!-- 上线文案：在本地点编辑器 Export JSON，将 furina-site-content.json 放到网站根目录（与 index.html 同级）再部署。 -->
+    <title>Furina</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="content.js" defer></script>
+    <script src="pet.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div id="menu-toast" class="menu-toast hidden" role="status" aria-live="polite"></div>
+
+    <div
+      id="lock-screen"
+      class="lock-screen"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lock-screen-title"
+    >
+      <div class="lock-screen__wash" aria-hidden="true"></div>
+      <div class="lock-screen__inner">
+        <h1 id="lock-screen-title" class="visually-hidden">Unlock</h1>
+        <div class="lock-screen__top" aria-hidden="true">
+          <div class="lock-screen__clock" id="lock-screen-time">10:00</div>
+          <div class="lock-screen__date" id="lock-screen-date">Tuesday, March 31</div>
+        </div>
+        <div class="lock-screen__bottom">
+          <div class="lock-screen__avatar" aria-hidden="true">
+            <img
+              class="lock-screen__avatar-img"
+              src="assets/app-icons/02-oc.png"
+              alt=""
+              width="84"
+              height="84"
+              decoding="async"
+            />
+          </div>
+          <form class="lock-screen__form" id="lock-screen-form" autocomplete="off">
+            <input
+              id="lock-screen-input"
+              class="lock-screen__input"
+              type="text"
+              name="unlock"
+              maxlength="24"
+              placeholder="Enter any characters"
+              aria-label="Unlock input"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+            />
+            <button type="submit" class="lock-screen__submit" aria-label="Continue">→</button>
+          </form>
+          <p class="lock-screen__hint">Press Enter to continue. Input is optional.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="desktop">
+      <header class="menu-bar" role="banner" aria-label="Menu bar">
+        <div class="menu-left menu-bar__left">
+          <span class="menu-bar__system">Furina</span>
+          <button type="button" class="menu-bar__stub">File</button>
+          <button type="button" class="menu-bar__launch" data-window="window-editor">Edit</button>
+          <button type="button" class="menu-bar__stub">View</button>
+          <div class="menu-bar__go">
+            <button
+              type="button"
+              class="menu-bar__go-trigger"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="go-menu"
+            >
+              Go
+            </button>
+            <ul id="go-menu" class="menu-bar__go-menu hidden" role="menu">
+              <li role="none">
+                <button type="button" class="menu-bar__go-item" role="menuitem" data-window="window-editor">
+                  Content Editor
+                </button>
+              </li>
+              <li role="none">
+                <button type="button" class="menu-bar__go-item" role="menuitem" data-window="window-about-me">
+                  About Me
+                </button>
+              </li>
+              <li role="none">
+                <button type="button" class="menu-bar__go-item" role="menuitem" data-window="window-video">
+                  Video
+                </button>
+              </li>
+              <li role="none">
+                <button type="button" class="menu-bar__go-item" role="menuitem" data-window="window-images">
+                  Images
+                </button>
+              </li>
+              <li role="none">
+                <button type="button" class="menu-bar__go-item" role="menuitem" data-window="window-apps">
+                  Apps
+                </button>
+              </li>
+            </ul>
+          </div>
+          <button type="button" class="menu-bar__stub">Window</button>
+          <button type="button" class="menu-bar__stub">Help</button>
+        </div>
+
+        <div class="menu-bar__center">
+          <span class="menu-bar__active-app" id="active-app-label" data-active-app-label>Desktop</span>
+        </div>
+
+        <div class="menu-right menu-bar__right">
+          <span>Wi-Fi</span>
+          <span>88%</span>
+          <span id="menu-time">Mon 10:00</span>
+        </div>
+      </header>
+
+      <main class="desktop-area">
+        <section class="window-layer" aria-label="Desktop windows">
+          <article
+            class="window window--about-me hidden"
+            id="window-about-me"
+            data-app-id="about-me"
+            data-window-state="closed"
+            data-window-focus="inactive"
+            style="--window-top: 88px; --window-left: 80px"
+          >
+            <div class="window-header" data-drag-handle>
+              <div class="window-controls" aria-label="Window controls">
+                <button class="traffic traffic-close" type="button" data-close aria-label="Close About Me"></button>
+                <button class="traffic traffic-min" type="button" data-close aria-label="Close"></button>
+                <button
+                  class="traffic traffic-max"
+                  type="button"
+                  data-toggle-maximize
+                  aria-label="Enter fullscreen"
+                  aria-pressed="false"
+                ></button>
+              </div>
+              <div class="window-title-group">
+                <span class="window-app-id">about</span>
+                <span class="window-title" data-title-target>About Me</span>
+              </div>
+            </div>
+            <div class="window-body" data-window-body>
+              <div class="content-slot" data-content-slot="aboutMe"></div>
+            </div>
+            <div class="window-resize-handle" data-resize-handle aria-hidden="true"></div>
+          </article>
+
+          <article
+            class="window window--articles hidden"
+            id="window-articles"
+            data-app-id="articles"
+            data-window-state="closed"
+            data-window-focus="inactive"
+            style="--window-top: 108px; --window-left: 200px"
+          >
+            <div class="window-header" data-drag-handle>
+              <div class="window-controls" aria-label="Window controls">
+                <button class="traffic traffic-close" type="button" data-close aria-label="Close Articles"></button>
+                <button class="traffic traffic-min" type="button" data-close aria-label="Close"></button>
+                <button
+                  class="traffic traffic-max"
+                  type="button"
+                  data-toggle-maximize
+                  aria-label="Enter fullscreen"
+                  aria-pressed="false"
+                ></button>
+              </div>
+              <div class="window-title-group">
+                <span class="window-app-id">read</span>
+                <span class="window-title" data-title-target>Articles</span>
+              </div>
+            </div>
+            <div class="window-body" data-window-body>
+              <div class="content-slot" data-content-slot="articles"></div>
+            </div>
+            <div class="window-resize-handle" data-resize-handle aria-hidden="true"></div>
+          </article>
+
+          <article
+            class="window window--video hidden"
+            id="window-video"
+            data-app-id="video"
+            data-window-state="closed"
+            data-window-focus="inactive"
+            style="--window-top: 128px; --window-left: 320px"
+          >
+            <div class="window-header" data-drag-handle>
+              <div class="window-controls" aria-label="Window controls">
+                <button class="traffic traffic-close" type="button" data-close aria-label="Close Video"></button>
+                <button class="traffic traffic-min" type="button" data-close aria-label="Close"></button>
+                <button
+                  class="traffic traffic-max"
+                  type="button"
+                  data-toggle-maximize
+                  aria-label="Enter fullscreen"
+                  aria-pressed="false"
+                ></button>
+              </div>
+              <div class="window-title-group">
+                <span class="window-app-id">video</span>
+                <span class="window-title" data-title-target>Video</span>
+              </div>
+            </div>
+            <div class="window-body" data-window-body>
+              <div class="content-slot" data-content-slot="video"></div>
+            </div>
+            <div class="window-resize-handle" data-resize-handle aria-hidden="true"></div>
+          </article>
+
+          <article
+            class="window window--images hidden"
+            id="window-images"
+            data-app-id="images"
+            data-window-state="closed"
+            data-window-focus="inactive"
+            style="--window-top: 148px; --window-left: 120px"
+          >
+            <div class="window-header" data-drag-handle>
+              <div class="window-controls" aria-label="Window controls">
+                <button class="traffic traffic-close" type="button" data-close aria-label="Close Images"></button>
+                <button class="traffic traffic-min" type="button" data-close aria-label="Close"></button>
+                <button
+                  class="traffic traffic-max"
+                  type="button"
+                  data-toggle-maximize
+                  aria-label="Enter fullscreen"
+                  aria-pressed="false"
+                ></button>
+              </div>
+              <div class="window-title-group">
+                <span class="window-app-id">images</span>
+                <span class="window-title" data-title-target>Images</span>
+              </div>
+            </div>
+            <div class="window-body" data-window-body>
+              <div class="content-slot" data-content-slot="images"></div>
+            </div>
+            <div class="window-resize-handle" data-resize-handle aria-hidden="true"></div>
+          </article>
+
+          <article
+            class="window window--apps hidden"
+            id="window-apps"
+            data-app-id="apps"
+            data-window-state="closed"
+            data-window-focus="inactive"
+            style="--window-top: 118px; --window-left: 400px"
+          >
+            <div class="window-header" data-drag-handle>
+              <div class="window-controls" aria-label="Window controls">
+                <button class="traffic traffic-close" type="button" data-close aria-label="Close Apps"></button>
+                <button class="traffic traffic-min" type="button" data-close aria-label="Close"></button>
+                <button
+                  class="traffic traffic-max"
+                  type="button"
+                  data-toggle-maximize
+                  aria-label="Enter fullscreen"
+                  aria-pressed="false"
+                ></button>
+              </div>
+              <div class="window-title-group">
+                <span class="window-app-id">apps</span>
+                <span class="window-title" data-title-target>Apps</span>
+              </div>
+            </div>
+            <div class="window-body" data-window-body>
+              <div class="content-slot" data-content-slot="apps"></div>
+            </div>
+            <div class="window-resize-handle" data-resize-handle aria-hidden="true"></div>
+          </article>
+
+          <article
+            class="window window--video-player window--has-fixed-height hidden"
+            id="window-video-player"
+            data-app-id="video-player"
+            data-window-state="closed"
+            data-window-focus="inactive"
+            style="--window-top: 68px; --window-left: 160px; --window-w: min(640px, 90vw); --window-h: min(560px, 78vh)"
+          >
+            <div class="window-header" data-drag-handle>
+              <div class="window-controls" aria-label="Window controls">
+                <button class="traffic traffic-close" type="button" data-close aria-label="Close Video Player"></button>
+                <button class="traffic traffic-min" type="button" data-close aria-label="Close"></button>
+                <button
+                  class="traffic traffic-max"
+                  type="button"
+                  data-toggle-maximize
+                  aria-label="Enter fullscreen"
+                  aria-pressed="false"
+                ></button>
+              </div>
+              <div class="window-title-group">
+                <span class="window-app-id">play</span>
+                <span class="window-title" data-title-target>Video Player</span>
+              </div>
+            </div>
+            <div class="window-body window-body--video-player" data-window-body>
+              <div class="video-player__frame" id="video-player-frame"></div>
+              <div class="video-player__info" id="video-player-info"></div>
+            </div>
+            <div class="window-resize-handle" data-resize-handle aria-hidden="true"></div>
+          </article>
+
+          <article
+            class="window window--editor window--has-fixed-height hidden"
+            id="window-editor"
+            data-app-id="editor"
+            data-window-state="closed"
+            data-window-focus="inactive"
+            style="--window-top: 56px; --window-left: 40px; --window-w: min(560px, 94vw); --window-h: min(520px, 72vh)"
+          >
+            <div class="window-header" data-drag-handle>
+              <div class="window-controls" aria-label="Window controls">
+                <button class="traffic traffic-close" type="button" data-close aria-label="Close Content Editor"></button>
+                <button class="traffic traffic-min" type="button" data-close aria-label="Close"></button>
+                <button
+                  class="traffic traffic-max"
+                  type="button"
+                  data-toggle-maximize
+                  aria-label="Enter fullscreen"
+                  aria-pressed="false"
+                ></button>
+              </div>
+              <div class="window-title-group">
+                <span class="window-app-id">edit</span>
+                <span class="window-title" data-title-target>Content Editor</span>
+              </div>
+            </div>
+            <div class="window-body window-body--editor" data-window-body>
+              <form id="site-editor-form" class="editor-form">
+                <p class="editor-intro">
+                  Content is saved in <strong>this browser only</strong> (localStorage). Export JSON to back up. After
+                  deploy, use Decap or another CMS if you need editing from anywhere.
+                </p>
+
+                <fieldset class="editor-fieldset">
+                  <legend>About Me</legend>
+                  <label class="editor-label">Title <input type="text" name="aboutTitle" autocomplete="off" /></label>
+                  <label class="editor-label"
+                    >Body (paragraphs separated by a blank line)
+                    <textarea name="aboutBody" rows="5" spellcheck="true"></textarea>
+                  </label>
+                </fieldset>
+
+                <fieldset class="editor-fieldset">
+                  <legend>Articles</legend>
+                  <label class="editor-label"
+                    >Intro line <input type="text" name="articlesLead" autocomplete="off"
+                  /></label>
+                  <div id="editor-articles" class="editor-rows"></div>
+                  <button type="button" class="editor-add-btn" id="editor-add-article">+ Add article</button>
+                </fieldset>
+
+                <fieldset class="editor-fieldset">
+                  <legend>Videos</legend>
+                  <label class="editor-label"
+                    >Portfolio PDF URL
+                    <input type="url" name="videosPdfUrl" placeholder="https://…/portfolio.pdf" autocomplete="off"
+                  /></label>
+                  <label class="editor-label"
+                    >Portfolio label (optional) <input type="text" name="videosPdfLabel" placeholder="作品集.pdf" autocomplete="off"
+                  /></label>
+                  <div id="editor-videos" class="editor-rows"></div>
+                  <button type="button" class="editor-add-btn" id="editor-add-video">+ Add video</button>
+                </fieldset>
+
+                <fieldset class="editor-fieldset">
+                  <legend>Images</legend>
+                  <p class="editor-hint">
+                    Up to 16 images. <strong>Add from URL</strong> stores only the link (tiny, best when storage is full).
+                    File upload embeds the image as data and uses much more space.
+                  </p>
+                  <label class="editor-label"
+                    >Image URL
+                    <input
+                      type="url"
+                      id="editor-image-url-input"
+                      placeholder="https://…"
+                      autocomplete="off"
+                      inputmode="url"
+                  /></label>
+                  <button type="button" class="editor-add-btn" id="editor-add-image-url">+ Add from URL</button>
+                  <input type="file" id="editor-images-input" accept="image/*" multiple class="editor-file" />
+                  <div id="editor-image-previews" class="editor-image-previews"></div>
+                </fieldset>
+
+                <fieldset class="editor-fieldset">
+                  <legend>Apps</legend>
+                  <p class="editor-hint">
+                    Launcher style: icon + name on screen; tap opens the link. Icon URL optional (fallback = first letter).
+                  </p>
+                  <div id="editor-apps" class="editor-rows"></div>
+                  <button type="button" class="editor-add-btn" id="editor-add-app">+ Add app</button>
+                </fieldset>
+
+                <div class="editor-actions">
+                  <button type="button" class="editor-btn editor-btn--primary" id="editor-save">Save &amp; apply</button>
+                  <button type="button" class="editor-btn" id="editor-reset">Reset defaults</button>
+                  <button type="button" class="editor-btn" id="editor-export">Export JSON</button>
+                  <label class="editor-btn editor-btn--file" for="editor-import">Import JSON</label>
+                  <input type="file" id="editor-import" accept="application/json,.json" class="visually-hidden" />
+                </div>
+              </form>
+            </div>
+            <div class="window-resize-handle" data-resize-handle aria-hidden="true"></div>
+          </article>
+        </section>
+      </main>
+
+      <nav class="dock" aria-label="Dock">
+        <button
+          class="dock-item dock-item--glyph"
+          type="button"
+          data-app-id="about-me"
+          data-window="window-about-me"
+          data-running="false"
+          data-active="false"
+          aria-label="Open About Me"
+        >
+          <span class="dock-item__surface icon-blue" aria-hidden="true">
+            <svg class="dock-item__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+          <span class="dock-item__running-indicator" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="dock-item dock-item--glyph"
+          type="button"
+          data-app-id="articles"
+          data-window="window-articles"
+          data-running="false"
+          data-active="false"
+          aria-label="Open Articles"
+        >
+          <span class="dock-item__surface icon-slate" aria-hidden="true">
+            <svg class="dock-item__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path
+                d="M6 4h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linejoin="round"
+              />
+              <path d="M14 4v6h6M8 13h8M8 17h6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="dock-item__running-indicator" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="dock-item dock-item--glyph"
+          type="button"
+          data-app-id="video"
+          data-window="window-video"
+          data-running="false"
+          data-active="false"
+          aria-label="Open Video"
+        >
+          <span class="dock-item__surface icon-purple" aria-hidden="true">
+            <svg class="dock-item__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.75" />
+              <path d="M10 9v6l5-3-5-3Z" fill="currentColor" />
+            </svg>
+          </span>
+          <span class="dock-item__running-indicator" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="dock-item dock-item--glyph"
+          type="button"
+          data-app-id="images"
+          data-window="window-images"
+          data-running="false"
+          data-active="false"
+          aria-label="Open Images"
+        >
+          <span class="dock-item__surface icon-green" aria-hidden="true">
+            <svg class="dock-item__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.75" />
+              <circle cx="8.5" cy="10" r="1.5" fill="currentColor" />
+              <path
+                d="m21 15-5-5-4 4-3-3-6 6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span class="dock-item__running-indicator" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="dock-item dock-item--glyph"
+          type="button"
+          data-app-id="apps"
+          data-window="window-apps"
+          data-running="false"
+          data-active="false"
+          aria-label="Open Apps"
+        >
+          <span class="dock-item__surface icon-orange" aria-hidden="true">
+            <svg class="dock-item__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.75" />
+              <rect x="13" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.75" />
+              <rect x="4" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.75" />
+              <rect x="13" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.75" />
+            </svg>
+          </span>
+          <span class="dock-item__running-indicator" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="dock-item dock-item--glyph"
+          type="button"
+          data-app-id="editor"
+          data-window="window-editor"
+          data-running="false"
+          data-active="false"
+          aria-label="Open Content Editor"
+        >
+          <span class="dock-item__surface icon-teal" aria-hidden="true">
+            <svg class="dock-item__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path
+                d="M4 20.5 9 15.5M15 8.5l5-5M12 3l2 2-7 7-3 1 1-3 7-7Zm-6 14 2-2"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span class="dock-item__running-indicator" aria-hidden="true"></span>
+        </button>
+      </nav>
+
+      <div class="dock-pet" id="dock-pet" role="button" tabindex="0" aria-label="Open dock pet chat">
+        <svg class="dock-pet__sprite" viewBox="0 0 64 64" aria-hidden="true">
+          <!-- pixel crab (lavender) -->
+          <g class="dock-pet__shadow" opacity="0.9">
+            <rect x="16" y="51" width="32" height="4" />
+          </g>
+
+          <g class="dock-pet__crab">
+            <!-- Whole crab is pixel-built (2x2 blocks). Shape tuned to match reference proportions. -->
+
+            <!-- wizard hat (purple, with dots, floppy to the left) -->
+            <g class="dock-pet__hat" aria-hidden="true">
+              <!-- brim -->
+              <rect class="dock-pet__hat-brim" x="10" y="18" width="44" height="4" />
+              <rect class="dock-pet__hat-brim" x="14" y="16" width="36" height="2" />
+
+              <!-- crown (wider, stepped) -->
+              <rect class="dock-pet__hat-body" x="18" y="14" width="28" height="2" />
+              <rect class="dock-pet__hat-body" x="20" y="12" width="28" height="2" />
+              <rect class="dock-pet__hat-body" x="22" y="10" width="26" height="2" />
+              <rect class="dock-pet__hat-body" x="24" y="8" width="22" height="2" />
+              <rect class="dock-pet__hat-body" x="26" y="6" width="18" height="2" />
+              <rect class="dock-pet__hat-body" x="28" y="4" width="14" height="2" />
+              <rect class="dock-pet__hat-body" x="30" y="2" width="10" height="2" />
+
+              <!-- floppy tip (left) -->
+              <rect class="dock-pet__hat-body2" x="24" y="4" width="4" height="2" />
+              <rect class="dock-pet__hat-body2" x="22" y="6" width="4" height="2" />
+              <rect class="dock-pet__hat-body2" x="20" y="8" width="4" height="2" />
+
+              <!-- dots -->
+              <rect class="dock-pet__hat-star" x="24" y="12" width="2" height="2" />
+              <rect class="dock-pet__hat-star" x="30" y="10" width="2" height="2" />
+              <rect class="dock-pet__hat-star" x="38" y="12" width="2" height="2" />
+              <rect class="dock-pet__hat-star" x="42" y="10" width="2" height="2" />
+              <rect class="dock-pet__hat-star" x="34" y="6" width="2" height="2" />
+              <rect class="dock-pet__hat-star" x="40" y="8" width="2" height="2" />
+            </g>
+
+            <!-- body (lavender) -->
+            <g class="dock-pet__bodyPixels" aria-hidden="true">
+              <!-- main body -->
+              <rect class="dock-pet__body" x="14" y="22" width="40" height="26" />
+              <!-- left cheek -->
+              <rect class="dock-pet__body" x="10" y="26" width="4" height="14" />
+              <!-- right cheek (small) -->
+              <rect class="dock-pet__body" x="54" y="30" width="4" height="10" />
+              <!-- highlight -->
+              <rect class="dock-pet__shine" x="16" y="24" width="34" height="2" />
+              <rect class="dock-pet__shine" x="18" y="26" width="16" height="2" />
+            </g>
+
+            <!-- arms -->
+            <g class="dock-pet__arm-left" aria-hidden="true">
+              <rect class="dock-pet__body" x="8" y="30" width="6" height="6" />
+            </g>
+
+            <g class="dock-pet__arm-right" aria-hidden="true">
+              <!-- arm extends outward -->
+              <rect class="dock-pet__body" x="54" y="32" width="6" height="6" />
+              <rect class="dock-pet__body" x="52" y="34" width="2" height="2" />
+              <g class="dock-pet__wand">
+                <!-- wand shaft (slight up-right tilt, pixel staircase) -->
+                <rect class="dock-pet__wandPixel" x="60" y="36" width="2" height="2" />
+                <rect class="dock-pet__wandPixel" x="62" y="34" width="2" height="2" />
+                <rect class="dock-pet__wandPixel" x="64" y="34" width="2" height="2" />
+                <rect class="dock-pet__wandPixel" x="66" y="32" width="2" height="2" />
+                <rect class="dock-pet__wandPixel" x="68" y="32" width="2" height="2" />
+                <rect class="dock-pet__wandPixel" x="70" y="30" width="2" height="2" />
+                <rect class="dock-pet__wandPixel" x="72" y="30" width="2" height="2" />
+                <rect class="dock-pet__wandPixel" x="74" y="28" width="2" height="2" />
+
+                <!-- sparkle star (✨) -->
+                <g class="dock-pet__wandStar" aria-hidden="true">
+                  <!-- yellow core -->
+                  <rect class="dock-pet__sparkCore" x="78" y="24" width="2" height="2" />
+                  <rect class="dock-pet__sparkCore" x="78" y="26" width="2" height="2" />
+                  <rect class="dock-pet__sparkCore" x="78" y="28" width="2" height="2" />
+                  <rect class="dock-pet__sparkCore" x="76" y="26" width="2" height="2" />
+                  <rect class="dock-pet__sparkCore" x="80" y="26" width="2" height="2" />
+
+                  <!-- sparkle tips (yellow) -->
+                  <rect class="dock-pet__sparkTip" x="78" y="22" width="2" height="2" />
+                  <rect class="dock-pet__sparkTip" x="78" y="30" width="2" height="2" />
+                  <rect class="dock-pet__sparkTip" x="74" y="26" width="2" height="2" />
+                  <rect class="dock-pet__sparkTip" x="82" y="26" width="2" height="2" />
+                  <rect class="dock-pet__sparkTip" x="76" y="24" width="2" height="2" />
+                  <rect class="dock-pet__sparkTip" x="80" y="24" width="2" height="2" />
+                  <rect class="dock-pet__sparkTip" x="76" y="28" width="2" height="2" />
+                  <rect class="dock-pet__sparkTip" x="80" y="28" width="2" height="2" />
+                </g>
+              </g>
+            </g>
+
+            <!-- legs: left two / right two with bigger middle gap -->
+            <g class="dock-pet__leg dock-pet__leg-1" aria-hidden="true">
+              <rect class="dock-pet__body2" x="14" y="48" width="4" height="12" />
+            </g>
+            <g class="dock-pet__leg dock-pet__leg-2" aria-hidden="true">
+              <rect class="dock-pet__body2" x="22" y="48" width="4" height="12" />
+            </g>
+            <g class="dock-pet__leg dock-pet__leg-3" aria-hidden="true">
+              <rect class="dock-pet__body2" x="42" y="48" width="4" height="12" />
+            </g>
+            <g class="dock-pet__leg dock-pet__leg-4" aria-hidden="true">
+              <rect class="dock-pet__body2" x="50" y="48" width="4" height="12" />
+            </g>
+
+            <!-- faces -->
+            <g class="dock-pet__face dock-pet__face--idle">
+              <rect class="dock-pet__eye" x="22" y="30" width="6" height="6" />
+              <rect class="dock-pet__eye" x="40" y="30" width="6" height="6" />
+            </g>
+
+            <g class="dock-pet__face dock-pet__face--alert">
+              <rect class="dock-pet__eye" x="22" y="31" width="6" height="4" transform="rotate(-18 25 33)" />
+              <rect class="dock-pet__eye" x="40" y="31" width="6" height="4" transform="rotate(18 43 33)" />
+            </g>
+
+            <g class="dock-pet__face dock-pet__face--annoyed">
+              <rect class="dock-pet__eye" x="22" y="30" width="6" height="6" />
+              <rect class="dock-pet__eye" x="40" y="30" width="6" height="6" />
+              <rect class="dock-pet__eye" x="20" y="28" width="8" height="2" />
+              <rect class="dock-pet__eye" x="40" y="28" width="8" height="2" />
+            </g>
+
+            <g class="dock-pet__face dock-pet__face--chatting">
+              <path class="dock-pet__eyeLine" d="M21 32c2 2 4 2 6 0" fill="none" stroke-width="3" stroke-linecap="round" />
+              <path class="dock-pet__eyeLine" d="M39 32c2 2 4 2 6 0" fill="none" stroke-width="3" stroke-linecap="round" />
+            </g>
+
+            <g class="dock-pet__face dock-pet__face--squint">
+              <!-- > < style squint -->
+              <!-- Left eye: ">" (tip points right) -->
+              <rect class="dock-pet__eyeLinePixel" x="22" y="30" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="24" y="32" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="22" y="34" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="24" y="31" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="24" y="33" width="2" height="2" />
+
+              <!-- Right eye: "<" (tip points left) -->
+              <rect class="dock-pet__eyeLinePixel" x="44" y="30" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="42" y="32" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="44" y="34" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="42" y="31" width="2" height="2" />
+              <rect class="dock-pet__eyeLinePixel" x="42" y="33" width="2" height="2" />
+            </g>
+
+            <g class="dock-pet__face dock-pet__face--offline">
+              <rect class="dock-pet__eye" x="24" y="32" width="4" height="4" />
+              <rect class="dock-pet__eye" x="40" y="32" width="4" height="4" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <section class="dock-pet-chat dock-pet-chat--hidden" id="dock-pet-chat" aria-label="Dock pet chat">
+        <div class="dock-pet-chat__header">
+          <div class="dock-pet-chat__title">Furina</div>
+          <button class="dock-pet-chat__close" type="button" aria-label="Close chat">✕</button>
+        </div>
+        <div class="dock-pet-chat__log" id="dock-pet-chat-log" aria-live="polite"></div>
+        <form class="dock-pet-chat__form" id="dock-pet-chat-form">
+          <input
+            class="dock-pet-chat__input"
+            id="dock-pet-chat-input"
+            type="text"
+            maxlength="240"
+            autocomplete="off"
+            placeholder="说点什么…"
+          />
+          <button class="dock-pet-chat__send" type="submit">Send</button>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "aboutTitle": "Hello",
+  "aboutBody": "This window is for your introduction, role, and what you care about.\n\nExport JSON from a local build to change copy for the live site.",
+  "articlesLead": "Long-form writing and notes.",
+  "articles": [
+    {
+      "title": "Sample article title",
+      "description": "Short description placeholder.",
+      "url": ""
+    },
+    {
+      "title": "Another piece",
+      "description": "Placeholder entry.",
+      "url": ""
+    }
+  ],
+  "videosPdfUrl": "",
+  "videosPdfLabel": "作品集.pdf",
+  "videos": [
+    {
+      "title": "Intro video",
+      "url": "",
+      "description": "",
+      "thumbnail": ""
+    }
+  ],
+  "images": [
+    { "url": "assets/gallery/01.png", "caption": "女侠 · 三视设定" },
+    { "url": "assets/gallery/02.png", "caption": "白衣 · 异瞳" },
+    { "url": "assets/gallery/03.png", "caption": "黑白金 · 侠士" },
+    { "url": "assets/gallery/04.png", "caption": "唐风 · 红色汉服" },
+    { "url": "assets/gallery/05.png", "caption": "粉色 · 汉服" },
+    { "url": "assets/gallery/06.png", "caption": "樱花 · 汉服" },
+    { "url": "assets/gallery/07.png", "caption": "僧袍 · 设定" },
+    { "url": "assets/gallery/08.png", "caption": "红衣 · 设定" },
+    { "url": "assets/gallery/09.png", "caption": "浅蓝 · 仙侠" }
+  ],
+  "apps": [
+    {
+      "icon": "assets/app-icons/01-arcade.png",
+      "title": "复古街机",
+      "description": "",
+      "url": "https://zh.wikipedia.org/wiki/街机"
+    },
+    {
+      "icon": "assets/app-icons/02-oc.png",
+      "title": "OC 角色",
+      "description": "",
+      "url": "https://www.pixiv.net/"
+    },
+    {
+      "icon": "assets/app-icons/03-python.png",
+      "title": "Python",
+      "description": "",
+      "url": "https://www.python.org/"
+    },
+    {
+      "icon": "assets/app-icons/04-agent.png",
+      "title": "Agent",
+      "description": "",
+      "url": "https://chatgpt.com/"
+    }
+  ]
+}
