@@ -1,65 +1,100 @@
 {
   "version": 1,
-  "aboutTitle": "Hello",
-  "aboutBody": "This window is for your introduction, role, and what you care about.\n\nExport JSON from a local build to change copy for the live site.",
-  "articlesLead": "Long-form writing and notes.",
+  "aboutTitle": "余雯涛（Furina）",
+  "aboutBody": "- 清华大学新闻传播学硕士（影视传播）；浙江大学社会学学士\n- AIGC 影像创作与视觉叙事研究者，用影像的方式理解世界，设计一站式视频生产工具\n- 探索与深度使用AI Agent产品（熟悉CLI、IDE界面），Vibe Coding（主要使用Cursor和Codex）\n- 思考AI安全与伦理，关注 AI 与人类共生的方式\n- 纪录片、短视频、AI影片创作经验，策、导、拍、剪全流程，具备从策划到落地的完整影像生产经验\n- 新手游戏策划（万物皆可游戏）\n\n终身学习，\n独立思考。\nLearn endlessly.\nThink for yourself.\n\n电话 Tel：(+86) 198-8313-4771\n邮箱 Email：m19883134771@163.com\n微信 Wechat：studywt777",
+  "articlesLead": "点击标题即可跳转阅读",
   "articles": [
     {
-      "title": "Sample article title",
-      "description": "Short description placeholder.",
-      "url": ""
+      "title": "读报|人民日报这样回顾过去“这一年”",
+      "description": "人民日报阅评文章",
+      "url": "https://mp.weixin.qq.com/s/HqKFtBhMBAr3qlqHiOSteA"
     },
     {
-      "title": "Another piece",
-      "description": "Placeholder entry.",
-      "url": ""
+      "title": "梅卡曼德｜邵天兰：以AI+3D视觉+灵巧手赋能全球智能机器人革命",
+      "description": "清华大学AI专刊",
+      "url": "https://mp.weixin.qq.com/s/1oKqYbjitiAIdB9NHgaXPQ"
+    },
+    {
+      "title": "华控智加｜刘德广：用声纹破译工业“心跳”，用AI守护大国重器",
+      "description": "清华大学AI专刊",
+      "url": "https://mp.weixin.qq.com/s/dL3i8BpqaPJhW6oUBKhX4Q"
     }
   ],
-  "videosPdfUrl": "",
+  "videosPdfUrl": "https://cloud.tsinghua.edu.cn/f/d67f97045f1c493e8f45/",
   "videosPdfLabel": "作品集.pdf",
   "videos": [
     {
-      "title": "Intro video",
-      "url": "",
-      "description": "",
-      "thumbnail": ""
+      "title": "纪录片《有鱼》｜导演、摄像、美术",
+      "url": "https://cloud.tsinghua.edu.cn/f/c18f68b7f09e4b6cbc23/",
+      "description": "西湖青年纪录片最佳短纪录片 海南岛国际电影节“青椰计划”入围 青幕计划入围影片 口述史版本《萍生》入围中国口述历史国际展",
+      "thumbnail": "assets/youyu.png"
+    },
+    {
+      "title": "短视频1",
+      "url": "https://www.bilibili.com/video/BV17E1oBiEar/?share_source=copy_web&vd_source=698c7b1b99c9aa7cd2ea57a8de439876",
+      "description": "《清华玫瑰大盗》 策划、AI视频制作、剪辑 播放量1300w+，点赞量174.2w （仅统计抖快平台，下同）",
+      "thumbnail": "assets/short1.png"
+    },
+    {
+      "title": "短视频2",
+      "url": "https://www.bilibili.com/video/BV1fzEXzGEHr/?share_source=copy_web&vd_source=698c7b1b99c9aa7cd2ea57a8de439876",
+      "description": "《2025高考加油》博主共创系列视频 统筹、策划、导演、剪辑 全系列5622w播放，238w点赞 单个视频最高146.2w赞",
+      "thumbnail": "assets/short2.png"
+    },
+    {
+      "title": "纪录片《未命名支点》",
+      "url": "https://cloud.tsinghua.edu.cn/f/0d07d12413134e4a9eb2/",
+      "description": "采访跟拍中国第一位 高考考入985院校的盲人大学生昂子喻 中国纪录片学院奖入围",
+      "thumbnail": "assets/unnamed-zhidian.png"
+    },
+    {
+      "title": "短视频3",
+      "url": "https://www.bilibili.com/video/BV1JXXWYgEQv/?spm_id_from=333.1387.search.video_card.click&vd_source=f53a68164bee9a4a5b9b2e6915c3b9a6",
+      "description": "《清华天气预报》策划、剪辑 播放量2500w+、全网点赞量282.1w",
+      "thumbnail": "assets/short3.png"
+    },
+    {
+      "title": "AI短片《逃离伊甸园》",
+      "url": "https://cloud.tsinghua.edu.cn/f/c14a8ad9b4794eebbcc7/",
+      "description": "使用Midjourney、comfyui、可灵、Vido、suno等AI工具制作剧情短片；第一步AIGC影视创作，探索AI全流程影视生产；全球大学生智能影像创作大赛 “海峡杯”数字技能大赛 AIGC破界者短视频大赛",
+      "thumbnail": "assets/taoli-yidianyuan.png"
     }
   ],
   "images": [
-    { "url": "assets/gallery/01.png", "caption": "女侠 · 三视设定" },
-    { "url": "assets/gallery/02.png", "caption": "白衣 · 异瞳" },
-    { "url": "assets/gallery/03.png", "caption": "黑白金 · 侠士" },
-    { "url": "assets/gallery/04.png", "caption": "唐风 · 红色汉服" },
-    { "url": "assets/gallery/05.png", "caption": "粉色 · 汉服" },
-    { "url": "assets/gallery/06.png", "caption": "樱花 · 汉服" },
-    { "url": "assets/gallery/07.png", "caption": "僧袍 · 设定" },
-    { "url": "assets/gallery/08.png", "caption": "红衣 · 设定" },
-    { "url": "assets/gallery/09.png", "caption": "浅蓝 · 仙侠" }
+    { "url": "assets/01.png", "caption": "女侠 · 三视设定" },
+    { "url": "assets/02.png", "caption": "白衣 · 异瞳" },
+    { "url": "assets/03.png", "caption": "黑白金 · 侠士" },
+    { "url": "assets/04.png", "caption": "唐风 · 红色汉服" },
+    { "url": "assets/05.png", "caption": "粉色 · 汉服" },
+    { "url": "assets/06.png", "caption": "樱花 · 汉服" },
+    { "url": "assets/07.png", "caption": "僧袍 · 设定" },
+    { "url": "assets/08.png", "caption": "红衣 · 设定" },
+    { "url": "assets/09.png", "caption": "浅蓝 · 仙侠" }
   ],
   "apps": [
     {
-      "icon": "assets/app-icons/01-arcade.png",
-      "title": "复古街机",
-      "description": "",
-      "url": "https://zh.wikipedia.org/wiki/街机"
+      "icon": "assets/01-arcade.png",
+      "title": "监控器游戏",
+      "description": "点击链接观看解说视频",
+      "url": "https://cloud.tsinghua.edu.cn/f/ffc87ea12a3442c6b852/"
     },
     {
-      "icon": "assets/app-icons/02-oc.png",
-      "title": "OC 角色",
-      "description": "",
-      "url": "https://www.pixiv.net/"
+      "icon": "assets/02-oc.png",
+      "title": "AI桌宠",
+      "description": "点击链接观看解说视频",
+      "url": "https://cloud.tsinghua.edu.cn/f/becc4ce5206a40f6bac7/"
     },
     {
-      "icon": "assets/app-icons/03-python.png",
-      "title": "Python",
-      "description": "",
-      "url": "https://www.python.org/"
+      "icon": "assets/03-python.png",
+      "title": "Seedance Clicker（桌面宏）",
+      "description": "点击链接观看解说视频",
+      "url": "https://cloud.tsinghua.edu.cn/f/1a72a76ae0e8433a8468/"
     },
     {
-      "icon": "assets/app-icons/04-agent.png",
-      "title": "Agent",
-      "description": "",
-      "url": "https://chatgpt.com/"
+      "icon": "assets/04-agent.png",
+      "title": "塔罗重绘",
+      "description": "点击链接观看解说视频",
+      "url": "https://cloud.tsinghua.edu.cn/f/a4b979faca9846228a5f/"
     }
   ]
 }
